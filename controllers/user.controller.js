@@ -367,3 +367,32 @@ export async function changePasswordControllerOTP(request, response) {
     }) 
    } 
 }
+
+export async function resendOtpController(request, response) {
+    const { email} = request.body;
+
+    let user;    
+    user  = await UserModel.findOne({email:email});
+
+    if(!user){
+        return response.status(409).json({
+            message:"User Not registered with this email",
+            error:true,
+            success:false
+        })
+    }
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
+
+    user = new UserModel({       
+        otp:verifyCode,
+        otpExpires: Date.now() + 600000
+    })
+
+    await user.save();
+
+    return response.status(201).json({
+        success:true,
+        error:false,
+        message:"OTP Send successfully! Please verify your email"      
+    })
+}

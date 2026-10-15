@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { changePasswordControllerOTP, forgotPasswordController, loginUserController, logoutController, registerUserController, verifyEmailController, verifyForgotPasswordController } from '../controllers/user.controller.js';
+import { changePasswordControllerOTP, forgotPasswordController, loginUserController, logoutController, registerUserController, resendOtpController, verifyEmailController, verifyForgotPasswordController } from '../controllers/user.controller.js';
 import auth from '../middlewares/auth.js';
 
 const userRouter = Router();
@@ -10,5 +10,6 @@ userRouter.post('/logout', logoutController);
 userRouter.post('/forgot-password', forgotPasswordController);
 userRouter.post('/verify-forgot-password-otp', verifyForgotPasswordController);
 userRouter.post('/forgot-password/change-password', changePasswordControllerOTP);
+userRouter.post('/resend-otp', resendOtpController);
 
 export default userRouter; 
